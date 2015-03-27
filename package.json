@@ -1,0 +1,24 @@
+{
+  "name": "keen-events",
+  "version": "0.0.0",
+  "description": "Simple  wrapper for the Keen.io events resource.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brandondoran/keen-events.git"
+  },
+  "keywords": [
+    "Keen.io",
+    "events",
+    "api"
+  ],
+  "author": "Brandon Doran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brandondoran/keen-events/issues"
+  },
+  "homepage": "https://github.com/brandondoran/keen-events"
+}

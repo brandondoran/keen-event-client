@@ -1,0 +1,17 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "esnext": true,
+  "forin": true,
+  "funcscope": false,
+  "indent": 2,
+  "latedef": true,
+  "maxcomplexity": 6,
+  "maxlen": 90,
+  "maxparams": 4,
+  "mocha": true,
+  "node": true,
+  "quotmark": "single",
+  "undef": "true",
+  "unused": true
+}

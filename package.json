@@ -2,9 +2,13 @@
   "name": "keen-events",
   "version": "0.0.0",
   "description": "Simple  wrapper for the Keen.io events resource.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "npm test"
+    "lint": "jshint src/*.js",
+    "compile": "babel -d lib/ src/",
+    "test": "node test/index",
+    "precompile": "npm run lint",
+    "pretest": "npm run compile"
   },
   "repository": {
     "type": "git",
@@ -20,5 +24,12 @@
   "bugs": {
     "url": "https://github.com/brandondoran/keen-events/issues"
   },
-  "homepage": "https://github.com/brandondoran/keen-events"
+  "homepage": "https://github.com/brandondoran/keen-events",
+  "dependencies": {
+    "jsonist": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel": "^4.7.16",
+    "jshint": "^2.6.3"
+  }
 }

@@ -1,12 +1,12 @@
 {
   "name": "keen-events",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Simple  wrapper for the Keen.io events resource.",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "jshint src/*.js",
-    "compile": "babel -d lib/ src/",
-    "test": "node test/index",
+    "lint": "./node_modules/jshint/bin/jshint src/*.js",
+    "compile": "./node_modules/babel/bin/babel-node -d lib/ src/",
+    "test": "./node_modules/mocha/bin/mocha --reporter spec --compilers js:babel/register",
     "precompile": "npm run lint",
     "pretest": "npm run compile"
   },
@@ -26,10 +26,12 @@
   },
   "homepage": "https://github.com/brandondoran/keen-events",
   "dependencies": {
-    "jsonist": "^1.0.0"
+    "jsonist": "git://github.com/brandondoran/jsonist.git"
   },
   "devDependencies": {
     "babel": "^4.7.16",
-    "jshint": "^2.6.3"
+    "bl": "^0.9.4",
+    "jshint": "^2.6.3",
+    "mocha": "^2.2.4"
   }
 }

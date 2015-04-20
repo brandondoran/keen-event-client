@@ -9,7 +9,7 @@
     "test": "mocha --reporter spec --compilers js:babel/register",
     "precompile": "npm run lint",
     "pretest": "npm run compile",
-    "prepublish": "npm test"
+    "prepublish": "npm run compile"
   },
   "engines": {
     "node": ">=0.10.36 <=0.12.x"

@@ -1,6 +1,6 @@
 var jsonist = require('jsonist');
 
-function KeenClient (options = {}) {
+function KeenClient (options) {
   this._urlBase = options.urlBase || 'https://api.keen.io';
   this._version = options.version || '3.0';
   this._writeKey = options.writeKey;
@@ -42,7 +42,7 @@ KeenClient.prototype.getEvent = function (collection, cb) {
   jsonist.get(this._getUrl(collection), reqOptions(this._masterKey), cb);
 };
 
-KeenClient.prototype.getEvents = function (projectId, cb) {
+KeenClient.prototype.getEvents = function (cb) {
   jsonist.get(this._url, reqOptions(this._masterKey), cb);
 };
 
@@ -50,4 +50,6 @@ KeenClient.prototype.deleteCollection = function (collection, cb) {
   jsonist.delete(this._getUrl(collection), reqOptions(this._masterKey), cb);
 };
 
-module.exports = KeenClient;
+module.exports.createClient = function(options = {}) {
+  return new KeenClient(options);
+};

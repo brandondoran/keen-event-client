@@ -2,7 +2,7 @@ var http = require('http');
 var assert = require('assert');
 var EventEmitter = require('events').EventEmitter;
 var bl = require('bl');
-var KeenClient = require('../lib/index');
+var keen = require('../lib/index');
 
 function testServer (data, statusCode) {
   var ee = new EventEmitter();
@@ -32,7 +32,7 @@ function testServer (data, statusCode) {
 }
 
 describe('KeenClient', function() {
-  var keen, event, events, options;
+  var client, event, events, options;
 
   beforeEach(function() {
     options = {
@@ -63,8 +63,8 @@ describe('KeenClient', function() {
       var expected = { created: true };
       testServer(JSON.stringify(expected), 201).on('ready', function(url) {
         options.urlBase = url;
-        keen = new KeenClient(options);
-        keen.addEvent('climate', event, function(err, data, res) {
+        client = keen.createClient(options);
+        client.addEvent('climate', event, function(err, data, res) {
           if (err) {
             return done(err);
           }
@@ -82,8 +82,8 @@ describe('KeenClient', function() {
     });
 
     it('should return an error if collection is null', function(done) {
-      keen = new KeenClient(options);
-      keen.addEvent(null, event, function(err, data, res) {
+      client = keen.createClient(options);
+      client.addEvent(null, event, function(err, data, res) {
         assert(err);
         done();
       });
@@ -95,8 +95,8 @@ describe('KeenClient', function() {
       var expected = { climate: [ { success: true }, { success: true } ] };
       testServer(JSON.stringify(expected), 200).on('ready', function(url) {
         options.urlBase = url;
-        keen = new KeenClient(options);
-        keen.addEvents(events, function(err, data, res) {
+        client = keen.createClient(options);
+        client.addEvents(events, function(err, data, res) {
           if (err) {
             return done(err);
           }
@@ -121,8 +121,8 @@ describe('KeenClient', function() {
       };
       testServer(JSON.stringify(expected), 200).on('ready', function(url) {
         options.urlBase = url;
-        keen = new KeenClient(options);
-        keen.getEvent('climate', function(err, data, res) {
+        client = keen.createClient(options);
+        client.getEvent('climate', function(err, data, res) {
           if (err) {
             return done(err);
           }
@@ -139,8 +139,8 @@ describe('KeenClient', function() {
     });
 
     it('should return an error if collection is null', function(done) {
-      keen = new KeenClient(options);
-      keen.addEvent(null, event, function(err, data, res) {
+      client = keen.createClient(options);
+      client.addEvent(null, event, function(err, data, res) {
         assert(err);
         done();
       });
@@ -156,8 +156,8 @@ describe('KeenClient', function() {
       }];
       testServer(JSON.stringify(expected), 200).on('ready', function(url) {
         options.urlBase = url;
-        keen = new KeenClient(options);
-        keen.getEvents(options.projectId, function(err, data, res) {
+        client = keen.createClient(options);
+        client.getEvents(function(err, data, res) {
           if (err) {
             return done(err);
           }
@@ -178,8 +178,8 @@ describe('KeenClient', function() {
     it('should delete entire event collection', function(done) {
       testServer(null, 204).on('ready', function(url) {
         options.urlBase = url;
-        keen = new KeenClient(options);
-        keen.deleteCollection('climate', function(err, data, res) {
+        client = keen.createClient(options);
+        client.deleteCollection('climate', function(err, data, res) {
           if (err) {
             return done(err);
           }
@@ -198,9 +198,9 @@ describe('KeenClient', function() {
 
 });
 
-// var keen = new KeenClient(options);
+// var client = new clientClient(options);
 
-// keen.addEvent('climate', event, function(err, data, res) {
+// client.addEvent('climate', event, function(err, data, res) {
 //   var data = '{ created: true }'; //201
 //   if (err) {
 //     return console.error('addEvent error:', err);
@@ -209,7 +209,7 @@ describe('KeenClient', function() {
 //   console.log('addEvent res:', res.statusCode);
 // });
 
-// keen.addEvents(events, function(err, data, res) {
+// client.addEvents(events, function(err, data, res) {
 //   var data = '{ climate: [ { success: true }, { success: true } ] }'; //200
 //   if (err) {
 //     return console.error('addEvents error:', err);
@@ -218,13 +218,13 @@ describe('KeenClient', function() {
 //   console.log('addEvents res:', res.statusCode);
 // });
 
-// keen.getEvent('climate', function(err, data, res) {
+// client.getEvent('climate', function(err, data, res) {
 //   var data = { properties:
-//    { 'keen.created_at': 'datetime',
+//    { 'client.created_at': 'datetime',
 //      temp: 'num',
 //      timestamp: 'string',
-//      'keen.id': 'string',
-//      'keen.timestamp': 'datetime',
+//      'client.id': 'string',
+//      'client.timestamp': 'datetime',
 //      rh: 'num',
 //      deviceId: 'string' } }; //200
 //   if (err) {
@@ -234,15 +234,15 @@ describe('KeenClient', function() {
 //   console.log('getEvent res:', res.statusCode);
 // });
 
-// keen.getEvents(options.projectId, function(err, data, res) {
+// client.getEvents(options.projectId, function(err, data, res) {
 //   var data = [ { url: '/3.0/projects/553089932fd4b135d5164719/events/climate',
 //     name: 'climate',
 //     properties:
-//      { 'keen.created_at': 'datetime',
+//      { 'client.created_at': 'datetime',
 //        temp: 'num',
 //        timestamp: 'string',
-//        'keen.id': 'string',
-//        'keen.timestamp': 'datetime',
+//        'client.id': 'string',
+//        'client.timestamp': 'datetime',
 //        rh: 'num',
 //        deviceId: 'string' } } ]; //200
 //   if (err) {
@@ -252,7 +252,7 @@ describe('KeenClient', function() {
 //   console.log('getEvents res:', res.statusCode);
 // });
 
-// keen.deleteCollection('climate', function(err, data, res) {
+// client.deleteCollection('climate', function(err, data, res) {
 //   var data = null; //204
 //   if (err) {
 //     return console.error('deleteCollection error:', err);

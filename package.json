@@ -1,30 +1,34 @@
 {
-  "name": "keen-events",
+  "name": "keen-event-client",
   "version": "0.1.0",
-  "description": "Simple  wrapper for the Keen.io events resource.",
+  "description": "Simple wrapper for the Keen.io events resource.",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "./node_modules/jshint/bin/jshint src/*.js",
-    "compile": "./node_modules/babel/bin/babel-node -d lib/ src/",
-    "test": "./node_modules/mocha/bin/mocha --reporter spec --compilers js:babel/register",
+    "lint": "jshint src/*.js",
+    "compile": "babel -d lib/ src/",
+    "test": "mocha --reporter spec --compilers js:babel/register",
     "precompile": "npm run lint",
-    "pretest": "npm run compile"
+    "pretest": "npm run compile",
+    "prepublish": "npm test"
+  },
+  "engines": {
+    "node": ">=0.10.36 <=0.12.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brandondoran/keen-events.git"
+    "url": "https://github.com/brandondoran/keen-event-client.git"
   },
   "keywords": [
     "Keen.io",
     "events",
     "api"
   ],
-  "author": "Brandon Doran",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/brandondoran/keen-events/issues"
+  "author": {
+    "name": "Brandon Doran",
+    "email": "bdoran@gmail.com"
   },
-  "homepage": "https://github.com/brandondoran/keen-events",
+  "license": "MIT",
+  "homepage": "https://github.com/brandondoran/keen-event-client",
   "dependencies": {
     "jsonist": "git://github.com/brandondoran/jsonist.git"
   },

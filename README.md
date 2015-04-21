@@ -130,10 +130,5 @@ Returns the schema information for all collections in the project specified by `
 ]
 ```
 
-
-### keen.deleteCollection(collection, callback)
-
-Deletes the entire collections specified by `collection` and all events within.  No data is returned by the callback.
-
 ## License
 [MIT](https://github.com/brandondoran/keen-event-client/blob/master/LICENSE)

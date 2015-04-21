@@ -1,6 +1,6 @@
 {
   "name": "keen-event-client",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Simple wrapper for the Keen.io events resource.",
   "main": "lib/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "license": "MIT",
   "homepage": "https://github.com/brandondoran/keen-event-client",
   "dependencies": {
-    "jsonist": "git://github.com/brandondoran/jsonist.git"
+    "jsonist": "^1.0.1"
   },
   "devDependencies": {
     "babel": "^4.7.16",

@@ -46,10 +46,6 @@ KeenClient.prototype.getEvents = function (cb) {
   jsonist.get(this._url, reqOptions(this._masterKey), cb);
 };
 
-KeenClient.prototype.deleteCollection = function (collection, cb) {
-  jsonist.delete(this._getUrl(collection), reqOptions(this._masterKey), cb);
-};
-
 module.exports.createClient = function(options = {}) {
   return new KeenClient(options);
 };

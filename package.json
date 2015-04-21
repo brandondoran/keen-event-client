@@ -30,7 +30,7 @@
   "license": "MIT",
   "homepage": "https://github.com/brandondoran/keen-event-client",
   "dependencies": {
-    "jsonist": "^1.0.1"
+    "jsonist": "^1.0.2"
   },
   "devDependencies": {
     "babel": "^4.7.16",

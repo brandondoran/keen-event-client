@@ -19,24 +19,23 @@ var client = keen.createClient({
   masterKey: 'YOUR_MASTER_KEY'
 });
 var event = {
-    name: 'test event',
-    items: 1
+  temp: 74.89,
+  rh: 52.17
 };
 
-keen.addEvent('myCollection', data, function(err, data, res) {
+keen.addEvent('climate', data, function(err, data, res) {
   if (err) {
     // there was an error!
   } else {
     // success: return value, if any, is in the data argument.
   }
 });
-
 ```
 
 
 ## API
 
-All callbacks are called with the following arguments `err, data, res`.
+All callbacks are called with arguments `err, data, res`.
 
 * `err` is the error object, if any, otherwise null.
 * `data` is the object deserialized from JSON that was returned by the keen.io API. This may be null if the request did not return data.
@@ -44,7 +43,7 @@ All callbacks are called with the following arguments `err, data, res`.
 
 ### keen.createClient(options)
 
-Returns an object initialized with `options` object.
+Returns an object initialized with the supplied `options` object. All operations performed by the instance of the client are against the keen.io project specified by `options.projectId` and will use the keys specified by `options.writeKey` or `options.readKey`.
 
 Required:
 * `projectId` keen.io project ID
@@ -59,30 +58,82 @@ Optional:
 
 Inserts a single `event` into the specified `collection`.
 
-[event example](https://keen.io/docs/api/reference/#post-request-body)
-
+Example `event`:
+```js
+{
+  temp: 72.34,
+  rh: 58.83
+}
+```
 
 ### keen.addEvents(events, callback)
 
-Inserts multiple `events` into one or more collections. `events` should be an object with properties, which are the names collections.  The values of these properties should be arrays of events.
+Inserts multiple `events` into one or more collections. `events` should be an object with properties, which are the names of collections.  The values of these properties should be arrays of objects, which are the events.
 
-[events example](https://keen.io/docs/api/reference/#post-request-body-example-of-batch-event-posting)
-
+`events` example:
+```js
+{
+  climate: [{
+    temp: 72.34,
+    rh: 58.83
+  }, {
+    temp: 71.59,
+    rh: 57.96
+  }],
+  ambient: [{
+    soundLevel: 0.43,
+    lightLevel: 0.39
+  }]
+}
+```
 
 ### keen.getEvent(collection, callback)
 
 Returns the schema information for the `collection`.
 
-[data example](https://keen.io/docs/api/reference/#id14)
-
+`data` example:
+```js
+{
+  properties: {
+    temp: 'num',
+    rh: 'num'
+  }
+}
+```
 
 ### keen.getEvents(callback)
 
 Returns the schema information for all collections in the project specified by `options.projectId`.
 
-[data example](https://keen.io/docs/api/reference/#query-string-parameters)
+`data` example:
+```js
+[
+  {
+    name: 'climate',
+    url: '/3.0/projects/YOUR_PROJECT_ID/events/climate',
+    properties: {
+      'client.id': 'string',
+      'client.created_at': 'datetime',
+      temp: 'num',
+      rh: 'num'
+    }
+  }, {
+    name: 'ambient',
+    url: '/3.0/projects/YOUR_PROJECT_ID/events/ambient',
+    properties: {
+      'client.id': 'string',
+      'client.created_at': 'datetime',
+      soundLevel: 'num',
+      lightLevel: 'num'
+    } 
+  }
+]
+```
 
 
 ### keen.deleteCollection(collection, callback)
 
 Deletes the entire collections specified by `collection` and all events within.  No data is returned by the callback.
+
+## License
+[MIT](https://github.com/brandondoran/keen-event-client/blob/master/LICENSE)
